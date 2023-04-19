@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -37,6 +38,13 @@ public class AddAddressActivity extends AppCompatActivity {
         toolbar=findViewById(R.id.add_address_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+
+            }
+        });
 
 
         auth = FirebaseAuth.getInstance();
@@ -94,6 +102,7 @@ public class AddAddressActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<DocumentReference> task) {
                                    if (task.isSuccessful()){
                                        Toast.makeText(AddAddressActivity.this, "Address Added",Toast.LENGTH_SHORT).show();
+                                   startActivity(new Intent(AddAddressActivity.this,DetailedActivity.class));
                                    }
                                 }
                             });

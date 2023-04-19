@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.media.Image;
 import android.os.Bundle;
@@ -56,6 +57,14 @@ public class DetailedActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.detailed_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+
+            }
+        });
 
         firestore = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
@@ -120,6 +129,24 @@ public class DetailedActivity extends AppCompatActivity {
             totalPrice = showAllModel.getPrice() *totalQuantity;
         }
 
+        //Buy Now
+        buyNow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DetailedActivity.this,AddressActivity.class);
+
+                if (newProductsModel != null){
+                    intent.putExtra("item", newProductsModel)
+                }
+                if (popularProductsModel != null){
+                    intent.putExtra("item", popularProductsModel)
+                }
+                if (showAllModel != null){
+                    intent.putExtra("item", showAllModel)
+                }
+                startActivity(intent);
+            }
+        });
         addToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
